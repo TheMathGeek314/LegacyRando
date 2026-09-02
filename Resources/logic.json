@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Soul_Totem-Greenpath_Second_Skip",
+    "logic": "Fungus1_03[left1] | Fungus1_03[right1] | Fungus1_03[bot1]"
+  },
+  {
+    "name": "Toll-Peak",
+    "logic": "(Mines_33[left1] | Mines_33[right1]) + LANTERN"
+  },
+  {
+    "name": "Toll-Deepnest",
+    "logic": "Deepnest_41[right1] + LANTERN"
+  }
+]
