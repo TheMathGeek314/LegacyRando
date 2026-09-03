@@ -48,5 +48,10 @@ namespace MiscRando {
             JumpToMiscButton.AddHideAndShowEvent(landingPage, MiscRandoPage);
             SetTopLevelButtonColor();
         }
+
+        internal void ResetMenu(GlobalSettings settings) {
+            miscMEF.SetMenuValues(settings);
+            SetTopLevelButtonColor();
+        }
     }
 }

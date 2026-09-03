@@ -94,10 +94,20 @@ namespace MiscRando {
                 self.GetState("Open Gates").AddTransition("FINISHED", "Toll Gate Opened");
                 self.GetState("Open Gates").Actions = [
                     new Lambda(() => {
-                        GameObject shiny = ShinyUtility.MakeNewMultiItemShiny(ap, ap.Items, FlingType.Everywhere);
-                        shiny.transform.position = self.gameObject.transform.position + Vector3.down;
-                        shiny.SetActive(true);
-                        ShinyUtility.FlingShinyRandomly(shiny.LocateMyFSM("Shiny Control"));
+                        if(ap.Items.Count == 1 && ap.Items[0].name == ap.Name) {
+                            ap.GiveAll(new GiveInfo {
+                                Transform = self.transform,
+                                Container = Container.Unknown,
+                                MessageType = MessageType.Corner,
+                                FlingType = FlingType.Everywhere
+                            });
+                        }
+                        else {
+                            GameObject shiny = ShinyUtility.MakeNewMultiItemShiny(ap, ap.Items, FlingType.Everywhere);
+                            shiny.transform.position = self.gameObject.transform.position + Vector3.down;
+                            shiny.SetActive(true);
+                            ShinyUtility.FlingShinyRandomly(shiny.LocateMyFSM("Shiny Control"));
+                        }
                     })
                 ];
             }

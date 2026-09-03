@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using HutongGames.PlayMaker;
+using HutongGames.PlayMaker.Actions;
+using ItemChanger;
+using ItemChanger.Extensions;
+using ItemChanger.FsmStateActions;
 using ItemChanger.Modules;
 
 namespace MiscRando {
@@ -13,16 +18,30 @@ namespace MiscRando {
 
         private static UnityAction<Scene, Scene> OnSceneLoad = null;
 
+        private bool stagnested = false;
+
         public static void EarlyHook(Scene arg0, Scene arg1) {
             OnSceneLoad?.Invoke(arg0, arg1);
         }
 
         public override void Initialize() {
             OnSceneLoad += SceneChange;
+            if(MiscRando.localSettings.StagNestBell && RandomizerMod.RandomizerMod.RS.GenerationSettings.PoolSettings.Stags) {
+                stagnested = true;
+                Events.AddFsmEdit("Cliffs_03", new FsmID("Stag", "Stag Control"), EditStagControl);
+                Events.AddFsmEdit("Cliffs_03", new FsmID("UI List Stag", "ui_list"), EditUiList);
+                Events.AddFsmEdit("Cliffs_03", new FsmID("Station Bell", "Stag Bell"), EditStagBell);
+            }
         }
 
         public override void Unload() {
             OnSceneLoad -= SceneChange;
+            if(stagnested) {
+                Events.RemoveFsmEdit("Cliffs_03", new FsmID("Stag", "Stag Control"), EditStagControl);
+                Events.RemoveFsmEdit("Cliffs_03", new FsmID("UI List Stag", "ui_list"), EditUiList);
+                Events.RemoveFsmEdit("Cliffs_03", new FsmID("Station Bell", "Stag Bell"), EditStagBell);
+                stagnested = false;
+            }
         }
 
         private void SceneChange(Scene arg0, Scene arg1) {
@@ -46,8 +65,42 @@ namespace MiscRando {
                 }
                 GameObject bell = GameObject.Instantiate(bellPrefab, new Vector3(19.8f, 7.1172f, 0.009f), Quaternion.identity);
                 bell.LocateMyFSM("Stag Bell").FsmVariables.GetFsmString("PlayerData Bool").Value = nameof(PlayerData.openedStagNest);
+                bell.name = "Station Bell";
                 bell.SetActive(true);
             }
+        }
+
+        private void EditStagControl(PlayMakerFSM self) {
+            FsmState openGrate = self.GetState("Open Grate");
+            openGrate.RemoveActionsOfType<SetPlayerDataBool>();
+            openGrate.RemoveActionsOfType<SetBoolValue>();
+            FsmBool cancelTravel = self.AddFsmBool("Cancel Travel", false);
+            if(!PlayerData.instance.GetBool(self.FsmVariables.GetFsmString("Station Opened Bool").Value)) {
+                self.FsmVariables.GetFsmInt("Station Position Number").Value = 0;
+                self.GetState("Current Location Check").RemoveActionsOfType<IntCompare>();
+                FsmState checkResult = self.GetState("Check Result");
+                checkResult.AddFirstAction(new Lambda(() => {
+                    if(cancelTravel.Value)
+                        self.SendEvent("CANCEL");
+                }));
+                checkResult.AddTransition("CANCEL", "HUD Return");
+            }
+            self.GetState("HUD Return").AddFirstAction(new SetBoolValue {
+                boolVariable = cancelTravel,
+                boolValue = false
+            });
+        }
+
+        private void EditUiList(PlayMakerFSM self) {
+            self.GetState("Selection Made Cancel").AddFirstAction(new Lambda(() => {
+                GameObject.Find("Stag").LocateMyFSM("Stag Control").FsmVariables.GetFsmBool("Cancel Travel").Value = true;
+            }));
+        }
+
+        private void EditStagBell(PlayMakerFSM self) {
+            FsmState init = self.GetState("Init");
+            init.RemoveActionsOfType<PlayerDataBoolTest>();
+            init.AddTransition("FINISHED", "Opened");
         }
     }
 }

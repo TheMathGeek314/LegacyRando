@@ -20,14 +20,14 @@ namespace MiscRando {
             RandoController.OnExportCompleted += AddModules;
             SettingsLog.AfterLogSettings += LogRandoSettings;
 
-            /*if(ModHooks.GetMod("ConnectionSettingsRando") is Mod)
+            if(ModHooks.GetMod("ConnectionSettingsRando") is Mod)
                 CsrInterop.Hook();
 
             if(ModHooks.GetMod("CondensedSpoilerLogger") is Mod)
-                stuff;
+                CondensedSpoilerLogger.AddCategory("Tolls", (args) => true, Consts.TollNames);
 
             if(ModHooks.GetMod("RandoSettingsManager") is Mod)
-                RsmInterop.Hook();*/
+                RsmInterop.Hook();
         }
 
         private static void AddModules(RandoController controller) {
