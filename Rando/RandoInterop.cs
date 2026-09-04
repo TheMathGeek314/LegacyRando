@@ -7,7 +7,7 @@ using RandomizerMod.Logging;
 using RandomizerMod.RandomizerData;
 using RandomizerMod.RC;
 
-namespace MiscRando {
+namespace LegacyRando {
     internal static class RandoInterop {
         public static void Hook() {
             RandoMenuPage.Hook();
@@ -31,14 +31,14 @@ namespace MiscRando {
         }
 
         private static void AddModules(RandoController controller) {
-            if(!MiscRando.globalSettings.Any)
+            if(!LegacyRando.globalSettings.Any)
                 return;
-            ItemChangerMod.Modules.GetOrAdd<MiscModule>();
+            ItemChangerMod.Modules.GetOrAdd<LegacyModule>();
         }
 
         private static void LogRandoSettings(LogArguments args, TextWriter w) {
-            w.WriteLine("Logging MiscRando settings:");
-            w.WriteLine(JsonUtil.Serialize(MiscRando.globalSettings));
+            w.WriteLine("Logging LegacyRando settings:");
+            w.WriteLine(JsonUtil.Serialize(LegacyRando.globalSettings));
         }
 
         private static void DefineLocations() {
@@ -50,17 +50,17 @@ namespace MiscRando {
             }
 
             ObjectLocation totem = new() {
-                objectName = "MiscRando Totem",
+                objectName = "LegacyRando Totem",
                 elevation = 0.2f,
                 forceShiny = false,
                 name = Consts.GreenpathTotem,
                 sceneName = "Fungus1_03",
                 flingType = FlingType.Everywhere
             };
-            DefLoc(totem, new MiscSprite("TotemPin"), 54.04f, 12.627f);
+            DefLoc(totem, new LegacySprite("TotemPin"), 54.04f, 12.627f);
 
-            DefLoc(new TollLocation { name = Consts.PeakToll, sceneName = "Mines_33" }, new MiscSprite("TollPin"), 49, 14);
-            DefLoc(new TollLocation { name = Consts.DeepnestToll, sceneName = "Deepnest_41" }, new MiscSprite("TollPin"), 99.8f, 88.12f);
+            DefLoc(new TollLocation { name = Consts.PeakToll, sceneName = "Mines_33" }, new LegacySprite("TollPin"), 49, 14);
+            DefLoc(new TollLocation { name = Consts.DeepnestToll, sceneName = "Deepnest_41" }, new LegacySprite("TollPin"), 99.8f, 88.12f);
         }
 
         private static void DefineItems() {
@@ -73,7 +73,7 @@ namespace MiscRando {
         public static InteropTag AddTag(TaggableObject obj) {
             InteropTag tag = obj.GetOrAddTag<InteropTag>();
             tag.Message = "RandoSupplementalMetadata";
-            tag.Properties["ModSource"] = MiscRando.instance.GetName();
+            tag.Properties["ModSource"] = LegacyRando.instance.GetName();
             return tag;
         }
     }

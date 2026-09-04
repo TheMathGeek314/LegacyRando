@@ -4,13 +4,13 @@ using UnityEngine;
 using ItemChanger;
 using ItemChanger.Internal;
 
-namespace MiscRando {
+namespace LegacyRando {
     [Serializable]
-    public class MiscSprite: ISprite {
-        private static SpriteManager EmbeddedSpriteManager = new(typeof(MiscSprite).Assembly, "MiscRando.Resources.");
+    public class LegacySprite: ISprite {
+        private static SpriteManager EmbeddedSpriteManager = new(typeof(LegacySprite).Assembly, "LegacyRando.Resources.");
 
         public string key;
-        public MiscSprite(string key) {
+        public LegacySprite(string key) {
             this.key = key;
         }
 

@@ -7,18 +7,18 @@ using RandomizerCore.LogicItems;
 using RandomizerMod.RC;
 using RandomizerMod.Settings;
 
-namespace MiscRando {
+namespace LegacyRando {
     public static class LogicAdder {
         public static void Hook() {
             RCData.RuntimeLogicOverride.Subscribe(50, ApplyLogic);
         }
 
         private static void ApplyLogic(GenerationSettings gs, LogicManagerBuilder lmb) {
-            if(!MiscRando.globalSettings.Any)
+            if(!LegacyRando.globalSettings.Any)
                 return;
             JsonLogicFormat fmt = new();
             Assembly a = typeof(LogicAdder).Assembly;
-            string p = "MiscRando.Resources.";
+            string p = "LegacyRando.Resources.";
 
             using Stream l = a.GetManifestResourceStream(p + "logic.json");
             lmb.DeserializeFile(LogicFileType.Locations, fmt, l);
@@ -28,15 +28,15 @@ namespace MiscRando {
 
             //hi nerthul
 
-            if(MiscRando.globalSettings.StagNestBell) {
+            if(LegacyRando.globalSettings.StagNestBell) {
                 //Can_Stag edits
             }
-            if(MiscRando.globalSettings.PeakToll) {
+            if(LegacyRando.globalSettings.PeakToll) {
                 //geo rock, stalactite, glimback, BWR, transition edits
                 //I have no idea whether these should be in a json or written here
                 //Also whether connections need a different place than vanilla checks
             }
-            if(MiscRando.globalSettings.DeepnestToll) {
+            if(LegacyRando.globalSettings.DeepnestToll) {
                 //good luck with midwife, corpse, BWR, deephunter, devout
             }
 

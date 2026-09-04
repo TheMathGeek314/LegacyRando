@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using MonoMod.ModInterop;
 using RandomizerMod.Logging;
 
-namespace MiscRando {
+namespace LegacyRando {
     internal static class CondensedSpoilerLogger {
         [ModImportName("CondensedSpoilerLogger")]
         private static class CslInterop {

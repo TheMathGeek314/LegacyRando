@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MiscRando {
-    public class MiscRando: Mod, IGlobalSettings<GlobalSettings>, ILocalSettings<LocalSettings> {
-        new public string GetName() => "MiscRando";
+namespace LegacyRando {
+    public class LegacyRando: Mod, IGlobalSettings<GlobalSettings>, ILocalSettings<LocalSettings> {
+        new public string GetName() => "LegacyRando";
         public override string GetVersion() => "1.0.0.0";
 
         public static GlobalSettings globalSettings { get; set; } = new();
@@ -15,20 +15,20 @@ namespace MiscRando {
         public void OnLoadLocal(LocalSettings s) => localSettings = s;
         public LocalSettings OnSaveLocal() => localSettings;
 
-        internal static MiscRando instance;
+        internal static LegacyRando instance;
 
-        public MiscRando(): base(null) {
+        public LegacyRando(): base(null) {
             instance = this;
         }
 
         public override void Initialize(Dictionary<string, Dictionary<string, GameObject>> preloadedObjects) {
-            MiscModule.totemPrefab = preloadedObjects["Fungus1_30"]["Soul Totem mini_horned"];
-            MiscModule.totemBasePrefab = preloadedObjects["Fungus1_30"]["Mini_totems_0000_7"];
-            MiscModule.tollGatePrefab = preloadedObjects["Mines_33"]["Toll Gate"];
-            MiscModule.tollMachinePrefab = preloadedObjects["Mines_33"]["Toll Gate Machine"];
-            MiscModule.bellPrefab = preloadedObjects["Crossroads_47"]["_Scenery/Station Bell"];
+            LegacyModule.totemPrefab = preloadedObjects["Fungus1_30"]["Soul Totem mini_horned"];
+            LegacyModule.totemBasePrefab = preloadedObjects["Fungus1_30"]["Mini_totems_0000_7"];
+            LegacyModule.tollGatePrefab = preloadedObjects["Mines_33"]["Toll Gate"];
+            LegacyModule.tollMachinePrefab = preloadedObjects["Mines_33"]["Toll Gate Machine"];
+            LegacyModule.bellPrefab = preloadedObjects["Crossroads_47"]["_Scenery/Station Bell"];
 
-            UnityEngine.SceneManagement.SceneManager.activeSceneChanged += MiscModule.EarlyHook;
+            UnityEngine.SceneManagement.SceneManager.activeSceneChanged += LegacyModule.EarlyHook;
 
             RandoInterop.Hook();
         }

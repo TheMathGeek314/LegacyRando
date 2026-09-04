@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MiscRando {
+namespace LegacyRando {
     public class Consts {
         public const string PeakToll = "Toll-Peak";
         public const string DeepnestToll = "Toll-Deepnest";

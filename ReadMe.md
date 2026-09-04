@@ -1,4 +1,4 @@
-# MiscRando
+# LegacyRando
 
 This rando connection adds several old objects that have since been removed from the vanilla game, including:
 - The soul totem in Greenpath at the second fireball skip

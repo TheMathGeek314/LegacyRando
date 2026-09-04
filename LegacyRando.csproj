@@ -8,13 +8,13 @@
     <!--<DocumentationFile>$(OutputPath)/$(AssemblyTitle).xml</DocumentationFile>-->
   </PropertyGroup>
   <PropertyGroup>
-    <RootNamespace>MiscRando</RootNamespace>
-    <AssemblyName>MiscRando</AssemblyName>
+    <RootNamespace>LegacyRando</RootNamespace>
+    <AssemblyName>LegacyRando</AssemblyName>
     <TargetFramework>net472</TargetFramework>
     <AssemblyTitle>MyMathGeekTemplate</AssemblyTitle>
     <Product>MyMathGeekTemplate</Product>
     <Description>A Hollow Knight Mod</Description>
-    <Copyright>Copyright ©  2024</Copyright>
+    <Copyright>Copyright ©  2026</Copyright>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
     <OutputPath>bin\$(Configuration)\</OutputPath>

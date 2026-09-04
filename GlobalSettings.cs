@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace MiscRando {
+namespace LegacyRando {
     public class GlobalSettings {
         public bool GreenpathTotem = false;
         public bool PeakToll = false;

@@ -2,17 +2,17 @@
 using RandoSettingsManager.SettingsManagement;
 using RandoSettingsManager.SettingsManagement.Versioning;
 
-namespace MiscRando {
+namespace LegacyRando {
     internal static class RsmInterop {
         public static void Hook() {
-            RandoSettingsManagerMod.Instance.RegisterConnection(new MiscSettingsProxy());
+            RandoSettingsManagerMod.Instance.RegisterConnection(new LegacySettingsProxy());
         }
     }
 
-    internal class MiscSettingsProxy: RandoSettingsProxy<GlobalSettings, string> {
-        public override string ModKey => MiscRando.instance.GetName();
+    internal class LegacySettingsProxy: RandoSettingsProxy<GlobalSettings, string> {
+        public override string ModKey => LegacyRando.instance.GetName();
 
-        public override VersioningPolicy<string> VersioningPolicy { get; } = new EqualityVersioningPolicy<string>(MiscRando.instance.GetVersion());
+        public override VersioningPolicy<string> VersioningPolicy { get; } = new EqualityVersioningPolicy<string>(LegacyRando.instance.GetVersion());
 
         public override void ReceiveSettings(GlobalSettings settings) {
             settings ??= new();
@@ -20,7 +20,7 @@ namespace MiscRando {
         }
 
         public override bool TryProvideSettings(out GlobalSettings settings) {
-            settings = MiscRando.globalSettings;
+            settings = LegacyRando.globalSettings;
             return settings.Any;
         }
     }

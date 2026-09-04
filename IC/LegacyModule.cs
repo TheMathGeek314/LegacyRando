@@ -8,8 +8,8 @@ using ItemChanger.Extensions;
 using ItemChanger.FsmStateActions;
 using ItemChanger.Modules;
 
-namespace MiscRando {
-    public class MiscModule: Module {
+namespace LegacyRando {
+    public class LegacyModule: Module {
         internal static GameObject totemPrefab;
         internal static GameObject totemBasePrefab;
         internal static GameObject tollGatePrefab;
@@ -26,7 +26,7 @@ namespace MiscRando {
 
         public override void Initialize() {
             OnSceneLoad += SceneChange;
-            if(MiscRando.localSettings.StagNestBell && RandomizerMod.RandomizerMod.RS.GenerationSettings.PoolSettings.Stags) {
+            if(LegacyRando.localSettings.StagNestBell && RandomizerMod.RandomizerMod.RS.GenerationSettings.PoolSettings.Stags) {
                 stagnested = true;
                 Events.AddFsmEdit("Cliffs_03", new FsmID("Stag", "Stag Control"), EditStagControl);
                 Events.AddFsmEdit("Cliffs_03", new FsmID("UI List Stag", "ui_list"), EditUiList);
@@ -45,7 +45,7 @@ namespace MiscRando {
         }
 
         private void SceneChange(Scene arg0, Scene arg1) {
-            if(arg1.name == "Deepnest_41" && MiscRando.localSettings.DeepnestToll) {
+            if(arg1.name == "Deepnest_41" && LegacyRando.localSettings.DeepnestToll) {
                 GameObject machine = GameObject.Instantiate(tollMachinePrefab, new Vector3(99.8f, 88.1172f, 0.009f), Quaternion.identity);
                 machine.name = "Toll Machine";
                 machine.SetActive(true);
@@ -53,13 +53,13 @@ namespace MiscRando {
                 gate.name = "Toll Gate";
                 gate.SetActive(true);
             }
-            if(arg1.name == "Fungus1_03" && MiscRando.localSettings.GreenpathTotem) {
+            if(arg1.name == "Fungus1_03" && LegacyRando.localSettings.GreenpathTotem) {
                 GameObject totem = GameObject.Instantiate(totemPrefab, new Vector3(54.04f, 12.627f, 0.01f), Quaternion.identity);
-                totem.name = "MiscRando Totem";
+                totem.name = "LegacyRando Totem";
                 totem.SetActive(true);
                 GameObject.Instantiate(totemBasePrefab, new Vector3(54.07f, 11.1036f, 0.009f), Quaternion.identity).SetActive(true);
             }
-            if(arg1.name == "Cliffs_03" && MiscRando.localSettings.StagNestBell) {
+            if(arg1.name == "Cliffs_03" && LegacyRando.localSettings.StagNestBell) {
                 foreach(string name in new string[] { "bell_appear_broken", "bell0000" }) {
                     GameObject.Find(name).SetActive(false);
                 }

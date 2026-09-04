@@ -11,7 +11,7 @@ using ItemChanger.Internal;
 using ItemChanger.Locations;
 using ItemChanger.Util;
 
-namespace MiscRando {
+namespace LegacyRando {
     internal class TollLocation: AutoLocation {
         private static readonly Dictionary<string, TollLocation> SubscribedLocations = new();
         private static FieldInfo _textMesh = typeof(DialogueBox).GetField("textMesh", BindingFlags.NonPublic | BindingFlags.Instance);
@@ -39,11 +39,11 @@ namespace MiscRando {
         private void EditTolls(On.PlayMakerFSM.orig_OnEnable orig, PlayMakerFSM self) {
             bool validTollRoom = false;
             AbstractPlacement ap = null;
-            if(self.gameObject.scene.name == "Mines_33" && MiscRando.localSettings.PeakToll) {
+            if(self.gameObject.scene.name == "Mines_33" && LegacyRando.localSettings.PeakToll) {
                 validTollRoom = true;
                 ap = Ref.Settings.Placements[Consts.PeakToll];
             }
-            if(self.gameObject.scene.name == "Deepnest_41" && MiscRando.localSettings.DeepnestToll) {
+            if(self.gameObject.scene.name == "Deepnest_41" && LegacyRando.localSettings.DeepnestToll) {
                 validTollRoom = true;
                 ap = Ref.Settings.Placements[Consts.DeepnestToll];
             }
@@ -54,7 +54,7 @@ namespace MiscRando {
 
             if(self.FsmName == "Toll Machine") {
                 self.gameObject.GetComponent<PersistentBoolItem>().enabled = false;
-                FsmState GateCheckState = self.AddState("MiscRando Gate Check");
+                FsmState GateCheckState = self.AddState("LegacyRando Gate Check");
                 FsmState ActivatedQState = self.GetState("Activated?");
                 self.GetState("Pause").RemoveTransitionsTo("Activated?");
                 self.GetState("Pause").AddTransition("FINISHED", GateCheckState);
@@ -67,7 +67,7 @@ namespace MiscRando {
                     }),
                     new SendEventByName {
                         eventTarget = new FsmEventTarget { target = FsmEventTarget.EventTarget.BroadcastAll },
-                        sendEvent = "MISCRANDO GATE OPENED",
+                        sendEvent = "LEGACYRANDO GATE OPENED",
                         delay = 0,
                         everyFrame = false
                     }
@@ -117,17 +117,17 @@ namespace MiscRando {
                     }), 
                     new SendEventByName {
                         eventTarget = new FsmEventTarget { target = FsmEventTarget.EventTarget.BroadcastAll },
-                        sendEvent = "MISCRANDO MACHINE ACTIVATED",
+                        sendEvent = "LEGACYRANDO MACHINE ACTIVATED",
                         delay = 0,
                         everyFrame = false
                     }
                 ];
-                self.GetState("Out Of Range").AddTransition("MISCRANDO MACHINE ACTIVATED", "Open Auto");
-                self.GetState("In Range").AddTransition("MISCRANDO MACHINE ACTIVATED", "Open Auto");
+                self.GetState("Out Of Range").AddTransition("LEGACYRANDO MACHINE ACTIVATED", "Open Auto");
+                self.GetState("In Range").AddTransition("LEGACYRANDO MACHINE ACTIVATED", "Open Auto");
             }
             else if(self.FsmName == "Toll Gate") {
-                self.GetState("Idle").AddTransition("MISCRANDO GATE OPEN", "Open");
-                self.GetState("Idle").AddTransition("MISCRANDO GATE OPENED", "Destroy Self");
+                self.GetState("Idle").AddTransition("LEGACYRANDO GATE OPEN", "Open");
+                self.GetState("Idle").AddTransition("LEGACYRANDO GATE OPENED", "Destroy Self");
             }
             orig(self);
         }

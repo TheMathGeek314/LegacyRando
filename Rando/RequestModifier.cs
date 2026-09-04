@@ -2,7 +2,7 @@
 using RandomizerMod.RandomizerData;
 using RandomizerMod.RC;
 
-namespace MiscRando {
+namespace LegacyRando {
     internal class RequestModifier {
         public static void Hook() {
             RequestBuilder.OnUpdate.Subscribe(-100, ApplyTotemDef);
@@ -13,7 +13,7 @@ namespace MiscRando {
         }
 
         private static void ApplyTotemDef(RequestBuilder rb) {
-            if(MiscRando.globalSettings.GreenpathTotem && rb.gs.PoolSettings.SoulTotems) {
+            if(LegacyRando.globalSettings.GreenpathTotem && rb.gs.PoolSettings.SoulTotems) {
                 rb.AddLocationByName(Consts.GreenpathTotem);
                 rb.EditLocationRequest(Consts.GreenpathTotem, info => {
                     info.customPlacementFetch = (factory, placement) => {
@@ -36,7 +36,7 @@ namespace MiscRando {
         }
 
         private static void ApplyTollDefs(RequestBuilder rb) {
-            foreach((string toll, bool setting) in new (string, bool)[] { (Consts.PeakToll, MiscRando.globalSettings.PeakToll), (Consts.DeepnestToll, MiscRando.globalSettings.DeepnestToll) }) {
+            foreach((string toll, bool setting) in new (string, bool)[] { (Consts.PeakToll, LegacyRando.globalSettings.PeakToll), (Consts.DeepnestToll, LegacyRando.globalSettings.DeepnestToll) }) {
                 if(setting) {
                     rb.AddLocationByName(toll);
                     rb.EditLocationRequest(toll, info => {
@@ -61,7 +61,7 @@ namespace MiscRando {
         }
 
         private static void SetupItems(RequestBuilder rb) {
-            GlobalSettings gs = MiscRando.globalSettings;
+            GlobalSettings gs = LegacyRando.globalSettings;
             if(!gs.Any)
                 return;
             if(gs.GreenpathTotem && rb.gs.PoolSettings.SoulTotems)
@@ -81,7 +81,7 @@ namespace MiscRando {
         }
 
         private static void DefinePools(RequestBuilder rb) {
-            GlobalSettings gs = MiscRando.globalSettings;
+            GlobalSettings gs = LegacyRando.globalSettings;
             if(!gs.Any)
                 return;
             if(rb.gs.SplitGroupSettings.RandomizeOnStart) {
@@ -100,8 +100,8 @@ namespace MiscRando {
                 myGroup ??= rb.MainItemStage.AddItemGroup(label);
             }
 
-            rb.OnGetGroupFor.Subscribe(0.01f, ResolveMiscGroup);
-            bool ResolveMiscGroup(RequestBuilder rb, string item, RequestBuilder.ElementType type, out GroupBuilder gb) {
+            rb.OnGetGroupFor.Subscribe(0.01f, ResolveLegacyGroup);
+            bool ResolveLegacyGroup(RequestBuilder rb, string item, RequestBuilder.ElementType type, out GroupBuilder gb) {
                 if(type is RequestBuilder.ElementType.Item or RequestBuilder.ElementType.Location) {
                     if(item.StartsWith("Toll-")) {
                         gb = myGroup;
@@ -114,8 +114,8 @@ namespace MiscRando {
         }
 
         private static void CloneToLocal(RequestBuilder rb) {
-            LocalSettings ls = MiscRando.localSettings;
-            GlobalSettings gs = MiscRando.globalSettings;
+            LocalSettings ls = LegacyRando.localSettings;
+            GlobalSettings gs = LegacyRando.globalSettings;
             ls.GreenpathTotem = gs.GreenpathTotem;
             ls.PeakToll = gs.PeakToll;
             ls.DeepnestToll = gs.DeepnestToll;

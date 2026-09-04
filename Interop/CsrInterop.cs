@@ -1,12 +1,12 @@
 ﻿using ConnectionSettingsRando;
 
-namespace MiscRando {
+namespace LegacyRando {
     internal static class CsrInterop {
         public static void Hook() {
             CSR.Register(
-                MiscRando.instance.GetName(),
-                () => MiscRando.globalSettings,
-                s => SettingsRandomizer.CopyTo(s, MiscRando.globalSettings)
+                LegacyRando.instance.GetName(),
+                () => LegacyRando.globalSettings,
+                s => SettingsRandomizer.CopyTo(s, LegacyRando.globalSettings)
             );
         }
     }
