@@ -75,7 +75,7 @@ namespace MiscRando {
             openGrate.RemoveActionsOfType<SetPlayerDataBool>();
             openGrate.RemoveActionsOfType<SetBoolValue>();
             FsmBool cancelTravel = self.AddFsmBool("Cancel Travel", false);
-            if(!PlayerData.instance.GetBool(self.FsmVariables.GetFsmString("Station Opened Bool").Value)) {
+            if(!PlayerData.instance.GetBool("openedStagNest")) {
                 self.FsmVariables.GetFsmInt("Station Position Number").Value = 0;
                 self.GetState("Current Location Check").RemoveActionsOfType<IntCompare>();
                 FsmState checkResult = self.GetState("Check Result");

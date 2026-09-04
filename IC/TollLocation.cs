@@ -74,10 +74,14 @@ namespace MiscRando {
                 ];
                 ActivatedQState.RemoveTransitionsTo("Activated");
                 ActivatedQState.AddTransition("ACTIVATED", "Toll Gate Opened");
+                ActivatedQState.AddTransition("ACTIVATED ALREADY", "Open Gates");
                 ActivatedQState.Actions = [
                     new Lambda(() => {
                         if(ap.AllObtained()) {
                             self.Fsm.Event("ACTIVATED");
+                        }
+                        else if(ap.Items.AnyEverObtained()) {
+                            self.Fsm.Event("ACTIVATED ALREADY");
                         }
                     })
                 ];
@@ -103,13 +107,23 @@ namespace MiscRando {
                             });
                         }
                         else {
-                            GameObject shiny = ShinyUtility.MakeNewMultiItemShiny(ap, ap.Items, FlingType.Everywhere);
-                            shiny.transform.position = self.gameObject.transform.position + Vector3.down;
-                            shiny.SetActive(true);
-                            ShinyUtility.FlingShinyRandomly(shiny.LocateMyFSM("Shiny Control"));
+                            foreach(AbstractItem item in ap.Items) {
+                                GameObject shiny = ShinyUtility.MakeNewShiny(ap, item, FlingType.Everywhere);
+                                shiny.transform.position = self.gameObject.transform.position + Vector3.down;
+                                shiny.SetActive(true);
+                                ShinyUtility.FlingShinyRandomly(shiny.LocateMyFSM("Shiny Control"));
+                            }
                         }
-                    })
+                    }), 
+                    new SendEventByName {
+                        eventTarget = new FsmEventTarget { target = FsmEventTarget.EventTarget.BroadcastAll },
+                        sendEvent = "MISCRANDO MACHINE ACTIVATED",
+                        delay = 0,
+                        everyFrame = false
+                    }
                 ];
+                self.GetState("Out Of Range").AddTransition("MISCRANDO MACHINE ACTIVATED", "Open Auto");
+                self.GetState("In Range").AddTransition("MISCRANDO MACHINE ACTIVATED", "Open Auto");
             }
             else if(self.FsmName == "Toll Gate") {
                 self.GetState("Idle").AddTransition("MISCRANDO GATE OPEN", "Open");
@@ -119,7 +133,7 @@ namespace MiscRando {
         }
 
         private string GetItemString(AbstractPlacement placement) {
-            string output = placement.Items[0].UIDef.GetPostviewName();
+            string output = placement.Items[0].GetPreviewName();
             for(int i = 1; i < placement.Items.Count; i++)
                 output += ", " + placement.Items[i].GetPreviewName();
             if(output.Length > 50)
