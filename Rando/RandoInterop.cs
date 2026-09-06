@@ -6,6 +6,7 @@ using ItemChanger.Tags;
 using RandomizerMod.Logging;
 using RandomizerMod.RandomizerData;
 using RandomizerMod.RC;
+using System.Collections.Generic;
 
 namespace LegacyRando {
     internal static class RandoInterop {
@@ -76,5 +77,11 @@ namespace LegacyRando {
             tag.Properties["ModSource"] = LegacyRando.instance.GetName();
             return tag;
         }
+    }
+    public class ConnectionLogicObject
+    {
+        public string name;
+        public string logicOverride;
+        public Dictionary<string, string> logicSubstitutions;
     }
 }

@@ -1,0 +1,10 @@
+[
+  {
+    "Effect": "Toll-Peak++",
+    "Name": "Toll-Peak"
+  },
+  {
+    "Effect": "Toll-Deepnest++",
+    "Name": "Toll-Deepnest"
+  }
+]

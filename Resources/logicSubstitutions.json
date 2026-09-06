@@ -1,0 +1,32 @@
+[
+    {
+        "name": "Deepnest_41",
+        "old": "Deepnest_41[right1]",
+        "replacement": "Deepnest_41[right1] + Toll-Deepnest"
+    },
+    {
+        "name": "Deepnest_41[left2]",
+        "old": "Deepnest_41[right1]",
+        "replacement": "Deepnest_41[right1] + Toll-Deepnest"
+    },
+    {
+        "name": "Deepnest_41[left1]",
+        "old": "Deepnest_41[right1]",
+        "replacement": "Deepnest_41[right1] + Toll-Deepnest"
+    },
+    {
+        "name": "Geo_Rock-Crystal_Peak_Entrance",
+        "old": "LANTERN",
+        "replacement": "Toll-Peak + (DARKROOMS | LANTERN)"
+    },
+    {
+        "name": "Mines_33[left1]",
+        "old": "LANTERN",
+        "replacement": "Toll-Peak + (DARKROOMS | LANTERN)"
+    },
+    {
+        "name": "Mines_33[right1]",
+        "old": "LANTERN",
+        "replacement": "Toll-Peak + (DARKROOMS | LANTERN)"
+    }
+]

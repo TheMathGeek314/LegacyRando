@@ -1,0 +1,9 @@
+[
+    {
+        "name": "Defeated_Any_Little_Weaver",
+        "logicOverride": "",
+        "logicSubstitutions": {
+            "Deepnest_41[right1]": "Deepnest_41[right1] + Toll-Deepnest"
+        }
+    }
+]

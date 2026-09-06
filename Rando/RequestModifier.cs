@@ -77,6 +77,8 @@ namespace LegacyRando {
                 });
                 if(enabled)
                     rb.AddItemByName(toll);
+                else
+                    rb.AddToVanilla(toll, toll);
             }
         }
 
